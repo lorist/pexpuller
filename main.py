@@ -10,7 +10,7 @@ fileConfig('logging_config.ini')
 log = logging.getLogger()
 
 '''
-Run this first to store credentials in the OS:
+Run this first to store credentials in the OS
 export USER="admin"
 export PASSWORD="password"
 export MGR_ADDRESS="mgr.customer.com"
@@ -26,6 +26,7 @@ class PexPuller():
         log.debug("Initilizing object.")
         # From command line
         self.service_type = args.service_type
+        self.filter = args.filter
         self.customer = args.customer
         # From config
         self.last_downloaded = config["Settings"]["last_downloaded"]
@@ -52,12 +53,13 @@ class PexPuller():
         from mgr_api import MgrPull
         calls = MgrPull(service_type= self.service_type,
                     customer= self.customer,
+                    filter = self.filter,
                     start = self.last_downloaded,
                     now= self.now,
                     user= self.user,
                     password= self.password,
                     mgr_address= self.mgr_address)
-        log.debug("Content = %s", calls.get_result())
+        # log.debug("Content = %s", calls)
         return calls.get_result()
 
 
@@ -77,6 +79,7 @@ def parse_arguments():
                         ]   
     parser = ArgumentParser(description="Pexip History db downloader", formatter_class=ArgumentDefaultsHelpFormatter)                
     parser.add_argument('-s', '--service_type', help='Service Type', default='gateway', choices=service_type_list)
+    parser.add_argument('-f', '--filter', help='Filter on. eg. remote_alias', default='service_tag')
     parser.add_argument('-c', '--customer', help='Customer domain filter')
     parser.add_argument( "-d", "--debug", action="store_true", help = "Turn on debug mode." )
     requiredNamed = parser.add_argument_group('required named arguments')
