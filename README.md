@@ -1,6 +1,12 @@
 # pexpuller
 Get gateway participant history from a Pexip management node
 
+```
+virtualenv -p python3 venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## Store credentials in OS environment:
 ```
 export USER="admin"
