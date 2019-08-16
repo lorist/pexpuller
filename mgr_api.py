@@ -20,7 +20,7 @@ class MgrPull():
         self.mgr_address = kwargs['mgr_address']
 
     def get_result(self):
-        url = f"https://{self.mgr_address}/api/admin/history/v1/participant/?limit=5000&has_media=True&call_direction=in&service_type={self.service_type}&{self.filter}__contains={self.customer}&end_time__gte={self.start}&end_time__lt={self.now}"
+        url = f'https://{self.mgr_address}/api/admin/history/v1/participant/?limit=5000&has_media=True&call_direction=in{"&service_type="+self.service_type if self.service_type != None else ""}{"&"+self.filter+"__contains="+self.customer if self.customer != None else ""}&end_time__gte={self.start}&end_time__lt={self.now}'
         response = requests.get(url, auth=HTTPBasicAuth(self.user, self.password))
         json_obj = []
         try:
