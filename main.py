@@ -78,7 +78,7 @@ def parse_arguments():
                             "test_call"
                         ]   
     parser = ArgumentParser(description="Pexip History db downloader", formatter_class=ArgumentDefaultsHelpFormatter)                
-    parser.add_argument('-s', '--service_type', help='Service Type', default='gateway', choices=service_type_list)
+    parser.add_argument('-s', '--service_type', help='Service Type', choices=service_type_list)
     parser.add_argument('-f', '--filter', help='Filter on. eg. remote_alias', default='service_tag')
     parser.add_argument('-c', '--customer', help='Customer domain filter')
     parser.add_argument( "-d", "--debug", action="store_true", help = "Turn on debug mode." )
